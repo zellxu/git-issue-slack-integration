@@ -5,9 +5,8 @@ require 'json'
 class IssueController < ApplicationController
   def index
     return if params[:user_name]=='slackbot'
-    # issue_number = params[:text][1..-1]
-    # uri = URI.parse("https://api.github.com/repos/Scoutmob/scoutmob-shoppe/issues/#{issue_number}?access_token=07756a7beb8e570d32599bbe122abb1e490ea8f7")
-    uri = URI.parse("https://api.github.com/repos/Scoutmob/scoutmob-shoppe/issues/411?access_token=07756a7beb8e570d32599bbe122abb1e490ea8f7")
+    issue_number = params[:text][/\d+/]
+    uri = URI.parse("https://api.github.com/repos/Scoutmob/scoutmob-shoppe/issues/#{issue_number}?access_token=07756a7beb8e570d32599bbe122abb1e490ea8f7")
     http = Net::HTTP.new(uri.host, uri.port) 
     http.use_ssl = (uri.scheme == "https")
     http.start 

@@ -1,6 +1,5 @@
 GitIssue::Application.routes.draw do
   root :to => "issue#index"
-  get '/issue' => 'issue#index'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
