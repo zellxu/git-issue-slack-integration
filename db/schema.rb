@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140725150339) do
+ActiveRecord::Schema.define(:version => 20140728152547) do
 
   create_table "repos", :force => true do |t|
     t.integer  "user_id"
@@ -23,10 +23,13 @@ ActiveRecord::Schema.define(:version => 20140725150339) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "username"
+    t.string   "email"
     t.string   "token"
+    t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "provider"
+    t.string   "uid"
   end
 
 end

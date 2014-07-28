@@ -1,5 +1,7 @@
 GitIssue::Application.routes.draw do
-  root :to => "issue#index"
+  root :to => 'users#new'
+  get '/auth/:provider/callback', to: 'sessions#create'
+  post '/issue/:username', to: "issue#slack"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

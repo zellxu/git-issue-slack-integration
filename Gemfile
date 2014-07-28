@@ -23,6 +23,11 @@ end
 gem 'jquery-rails'
 gem 'rails_12factor', group: :production
 ruby "1.9.3"
+gem 'omniauth-github'
+
+group :test, :development do
+	gem 'dotenv-rails'
+end
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -37,4 +42,4 @@ ruby "1.9.3"
 # gem 'capistrano'
 
 # To use debugger
-# gem 'debugger'
+gem 'debugger'
