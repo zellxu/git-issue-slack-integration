@@ -38,17 +38,12 @@ GEM
       execjs
     coffee-script-source (1.7.1)
     columnize (0.8.9)
-    debugger (1.6.6)
+    debugger (1.6.8)
       columnize (>= 0.3.1)
       debugger-linecache (~> 1.2.0)
-      debugger-ruby_core_source (~> 1.3.2)
+      debugger-ruby_core_source (~> 1.3.5)
     debugger-linecache (1.2.0)
-    debugger-ruby_core_source (1.3.4)
-    dotenv (0.11.1)
-      dotenv-deployment (~> 0.0.2)
-    dotenv-deployment (0.0.2)
-    dotenv-rails (0.11.1)
-      dotenv (= 0.11.1)
+    debugger-ruby_core_source (1.3.5)
     erubis (2.7.0)
     execjs (2.2.1)
     faraday (0.9.0)
@@ -118,7 +113,7 @@ GEM
     rake (10.3.2)
     rdoc (3.12.2)
       json (~> 1.4)
-    sass (3.3.10)
+    sass (3.3.14)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
@@ -144,7 +139,6 @@ PLATFORMS
 DEPENDENCIES
   coffee-rails (~> 3.2.1)
   debugger
-  dotenv-rails
   jquery-rails
   omniauth-github
   pg
