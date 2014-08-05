@@ -19,11 +19,11 @@ class ReposController < ApplicationController
   end
 
   def edit
-    @repo = Repo.find(params[:id])
+    @repo = current_user.repos.find(params[:id])
   end
 
   def update
-    @repo = Repo.find(params[:id])
+    @repo = current_user.repos.find(params[:id])
     if @repo.update_attributes(params[:repo])
       redirect_to repos_path, notice: "Repo successfully updated"
     else
@@ -32,7 +32,7 @@ class ReposController < ApplicationController
   end
 
   def destroy
-    @repo = Repo.find(params[:id])
+    @repo = current_user.repos.find(params[:id])
     @repo.destroy
     redirect_to repos_path
   end

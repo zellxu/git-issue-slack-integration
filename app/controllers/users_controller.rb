@@ -1,10 +1,9 @@
 class UsersController < ApplicationController
   def update
-    @user = User.find(params[:id])
-    if @user.update_attributes(params[:user])
+    if current_user.update_attributes(params[:user])
       redirect_to repos_path, notice: "Token successfully updated"
     else
-      render "repos/edit"
+      render "repos"
     end
   end
 end

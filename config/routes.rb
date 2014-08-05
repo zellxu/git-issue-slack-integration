@@ -4,7 +4,7 @@ GitIssue::Application.routes.draw do
   get '/sign-out', to: 'sessions#destroy'
   post '/issue', to: "issue#slack"
 
-  resources :users
+  resource :user
 
   resources :repos do
     member do

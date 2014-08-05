@@ -1,3 +1,16 @@
+== Slack Integration for Github Issues
+
+This is a slack outgoing webhook integration for linking Github issues.
+
+== Getting Started
+
+1. Authorize and customize by logging in to http://git-issue-slack-integration.herokuapp.com/
+
+2. Enter your outgoing webhook integration token and create repos you want to link
+
+3. Configure the URL of your webhook to post at http://git-issue-slack-integration.herokuapp.com/issue
+
+
 == Welcome to Rails
 
 Rails is a web-application framework that includes everything needed to create
