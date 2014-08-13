@@ -1,8 +1,8 @@
 <h1> Edit the repo </h1>
 
-<%= form_for @repo do |f| %>
-  <% @repo.errors.full_messages.each do |msg| %>
-    <li><%= msg %></li>
+<%= form_for repo do |f| %>
+  <% repo.errors.full_messages.each do |msg| %>
+    <li class="list-group-item"><%= msg %></li>
   <% end %>
   <fieldset>
     <div class="field">

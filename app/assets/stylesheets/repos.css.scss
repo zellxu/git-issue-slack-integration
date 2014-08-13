@@ -3,6 +3,9 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import 'bootstrap.min';
 
+.nav{
+  line-height: 50px;
+}
 .field_with_errors {
   label{
     color: #d9534f;
@@ -19,4 +22,10 @@
 
 .repo{
   margin-top: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .nav{
+    line-height: inherit;
+  }
 }

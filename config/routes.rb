@@ -1,7 +1,8 @@
 GitIssue::Application.routes.draw do
   root :to => 'repos#index'
+  get '/about', to: 'repos#index'
   get '/auth/:provider/callback', to: 'sessions#create'
-  get '/sign-out', to: 'sessions#destroy'
+  get '/signout', to: 'sessions#destroy'
   post '/issue', to: "issue#slack"
 
   resource :user

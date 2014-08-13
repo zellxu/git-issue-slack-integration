@@ -2,7 +2,7 @@
 
 <%= form_for @repo do |f| %>
   <% @repo.errors.full_messages.each do |msg| %>
-    <li><%= msg %></li>
+    <li class="list-group-item"><%= msg %></li>
   <% end %>
   <fieldset>
     <div class="field">
