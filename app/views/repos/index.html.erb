@@ -20,7 +20,7 @@
             <div class="panel-heading">
               <%= "#{r.short_name}: #{r.owner}/#{r.name} " %>
               <div class="actions pull-right">
-                <%= link_to "Edit", edit_repo_path(r),  class: "btn-sm btn-primary" %>
+                <%= link_to "Edit", edit_repo_path(r), remote: true, data: {toggle: "modal", target: "#repo-modal"}, class: "btn-sm btn-primary" %>
                 <%= link_to 'destory',  r,  method: :delete, data: { confirm: 'Are you sure?' }, class: "btn-sm btn-danger" %>
                 <%= link_to 'make default', make_default_repo_path(r), class: "btn-sm btn-primary" unless current_user.default_repo_id == r.id %>
               </div>
@@ -30,7 +30,7 @@
       </div>
 
       <p>
-        <%= link_to "Add a new repo", new_repo_path, class: "btn-sm btn-primary" %> or choose from below
+        <%= link_to "Add a new repo", new_repo_path, remote: true, data: {toggle: "modal", target: "#new-repo-modal"}, class: "btn-sm btn-primary" %> or choose from below
       </p>
 
       <div class="panel-group" id="org-secion">
@@ -39,7 +39,7 @@
           <div class="panel panel-default">
             <div class="panel-heading" data-toggle="collapse" data-parent="#org-secion" data-target="#collapse-<%= org['login'] %>">
               <h4 class="panel-title">
-                <a href="#collapse-<%= org['login'] %>"><%= org['login'] %></a>
+                <a href="#javascript;"><%= org['login'] %></a>
               </h4>
             </div>
             <div id="collapse-<%= org['login'] %>" class="panel-collapse collapse">
@@ -49,9 +49,8 @@
                     <div class="panel panel-default">
                       <div class="panel-body">
                         <%= repo['name'] %>
-                        <!-- questions -->
                         <div class="action pull-right">
-                          <%= link_to "Add", new_repo_url(owner: org['login'], name: repo['name']),  class: "btn-sm btn-primary" %>
+                          <%= link_to "Add", new_repo_url(repo: {owner: org['login'], name: repo['name']}),  remote: true, data: {toggle: "modal", target: "#repo-modal"}, class: "btn-sm btn-primary" %>
                         </div>
                       </div>
                     </div>
@@ -71,7 +70,7 @@
               <div class="panel-heading">
                 <%= repo['name'] %>
                 <div class="action pull-right">
-                  <%= link_to "Add", new_repo_url(owner: repo['owner']['login'], name: repo['name']),  class: "btn-sm btn-primary" %>
+                  <%= link_to "Add", new_repo_url(repo: {owner: repo['owner']['login'], name: repo['name']}),  remote: true, data: {toggle: "modal", target: "#repo-modal"}, class: "btn-sm btn-primary" %>
                 </div>
               </div>
             </div>
@@ -81,7 +80,7 @@
 
     </div>
   </div>
-
+  <div class="modal fade" id="repo-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
 <% else %>
   <%= link_to "Sign in with Github", "/auth/github" %>
 <% end %>

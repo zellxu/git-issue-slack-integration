@@ -7,7 +7,7 @@ class ReposController < ApplicationController
 
   def index
     if(session[:user_id])
-      @repos = current_user.repos
+      @repos = current_user.repos.order(:short_name)
       access_token = current_user.token
       uri = URI.parse("https://api.github.com/user/orgs?access_token=#{access_token}")
       http = Net::HTTP.new(uri.host, uri.port)
@@ -34,31 +34,48 @@ class ReposController < ApplicationController
   end
 
   def new
-    @repo = current_user.repos.new
-    @repo.owner = params[:owner]
-    @repo.name = params[:name]
+    @repo = current_user.repos.new(params[:repo])
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   def create
     @repo = current_user.repos.new(params[:repo])
     if @repo.save
       current_user.update_attributes(default_repo_id: @repo.id) if current_user.repos.count <= 1
-      redirect_to repos_path, notice: "Repo successfully added"
+      render js: "window.location = '#{repos_path}'"
     else
-      render "new"
+      respond_to do |format|
+        format.js
+        format.html
+      end
+    end
+  end
+
+  def edit
+    respond_to do |format|
+      format.js
+      format.html
     end
   end
 
   def update
     if repo.update_attributes(params[:repo])
-      redirect_to repos_path, notice: "Repo successfully updated"
+      render js: "window.location = '#{repos_path}'"
     else
-      render "edit"
+      respond_to do |format|
+        format.js
+        format.html
+      end
     end
   end
 
   def destroy
     repo.destroy
+    current_user.update_attributes(default_repo_id: current_user.repos.order(:short_name).first.try(:id)) if current_user.default_repo_id==repo.id
+    current_user.update_attributes(default_repo_id: nil) if current_user.repos.count == 0
     redirect_to repos_path
   end
 
@@ -70,5 +87,4 @@ class ReposController < ApplicationController
   def repo
     @repo ||= current_user.repos.find(params[:id])
   end
-
 end
