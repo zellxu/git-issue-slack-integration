@@ -8,8 +8,6 @@
 </head>
 <body>
 
-
-
 <div class="container">
   <nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
@@ -42,9 +40,9 @@
     </div><!-- /.container-fluid -->
   </nav>
 
-  <% flash.each do |key, value| %>
-    <p class="alert alert-success" role="alert"><%= value %></p>
-  <% end %>
+  <div id="flash-message">
+    <%= render partial: 'layouts/flash_message' %>
+  </div>
   <%= yield %>
 </div>
 </body>

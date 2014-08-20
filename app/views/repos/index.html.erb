@@ -1,7 +1,7 @@
 <% if current_user %>
   <div class="row">
     <div class="col-md-12">
-      <%= form_for current_user do |f|%>
+      <%= form_for current_user, url: user_path, remote: true do |f|%>
         <fieldset>
           <div class="field">
             <%= f.label "Enter your integration token below:", class: "col-4 control-label" %><br/>
@@ -16,28 +16,19 @@
       <div class="panel-group" id="repos">
         <h2>Added Repos</h2>
         <% @repos.each do |r| %>
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <%= "#{r.short_name}: #{r.owner}/#{r.name} " %>
-              <div class="actions pull-right">
-                <%= link_to "Edit", edit_repo_path(r), remote: true, data: {toggle: "modal", target: "#repo-modal"}, class: "btn-sm btn-primary" %>
-                <%= link_to 'destory',  r,  method: :delete, data: { confirm: 'Are you sure?' }, class: "btn-sm btn-danger" %>
-                <%= link_to 'make default', make_default_repo_path(r), class: "btn-sm btn-primary" unless current_user.default_repo_id == r.id %>
-              </div>
-            </div>
-          </div>
+          <%= render partial: 'row', locals: {r: r} %>
         <% end %>
       </div>
 
       <p>
-        <%= link_to "Add a new repo", new_repo_path, remote: true, data: {toggle: "modal", target: "#new-repo-modal"}, class: "btn-sm btn-primary" %> or choose from below
+        <%= link_to "Add a new repo", new_repo_path, remote: true, class: "btn-sm btn-primary" %> or choose from below
       </p>
 
-      <div class="panel-group" id="org-secion">
+      <div class="panel-group" id="org-section">
         <h2>Organizations</h2>
         <% @organizations.each do |org| %>
-          <div class="panel panel-default">
-            <div class="panel-heading" data-toggle="collapse" data-parent="#org-secion" data-target="#collapse-<%= org['login'] %>">
+          <div class="panel panel-default" id="<%= org['login'] %>" >
+            <div class="panel-heading" data-toggle="collapse" data-parent="#org-section" data-target="#collapse-<%= org['login'] %>">
               <h4 class="panel-title">
                 <a href="#javascript;"><%= org['login'] %></a>
               </h4>
@@ -46,11 +37,11 @@
               <div class="panel-body">
                 <% @org_repos[org['login']].each do |repo| %>
                   <% unless current_user.repos.find_by_owner_and_name(org['login'],repo['name']) %>
-                    <div class="panel panel-default">
+                    <div class="panel panel-default <%= repo['name'] %>">
                       <div class="panel-body">
                         <%= repo['name'] %>
                         <div class="action pull-right">
-                          <%= link_to "Add", new_repo_url(repo: {owner: org['login'], name: repo['name']}),  remote: true, data: {toggle: "modal", target: "#repo-modal"}, class: "btn-sm btn-primary" %>
+                          <%= link_to "Add", new_repo_url(repo: {owner: org['login'], name: repo['name']}),  remote: true, class: "btn-sm btn-primary" %>
                         </div>
                       </div>
                     </div>
@@ -62,15 +53,15 @@
         <% end %>
       </div>
 
-      <div class="panel-group" id="user-secion">
+      <div class="panel-group" id="<%= @user_repos.first['owner']['login'] %>">
         <h2>User Repos</h2>
         <% @user_repos.each do |repo| %>
           <% unless current_user.repos.find_by_owner_and_name(repo['owner']['login'],repo['name']) %>
-            <div class="panel panel-default">
+            <div class="panel panel-default <%= repo['name'] %>">
               <div class="panel-heading">
                 <%= repo['name'] %>
                 <div class="action pull-right">
-                  <%= link_to "Add", new_repo_url(repo: {owner: repo['owner']['login'], name: repo['name']}),  remote: true, data: {toggle: "modal", target: "#repo-modal"}, class: "btn-sm btn-primary" %>
+                  <%= link_to "Add", new_repo_url(repo: {owner: repo['owner']['login'], name: repo['name']}),  remote: true, class: "btn-sm btn-primary" %>
                 </div>
               </div>
             </div>

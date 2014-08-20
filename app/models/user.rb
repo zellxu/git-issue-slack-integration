@@ -1,9 +1,11 @@
 class User < ActiveRecord::Base
-  attr_accessible :email, :token, :default_repo_id, :integration_token
+  attr_accessible :email, :name, :token, :default_repo_id, :integration_token
 
   has_many :repos
 
   validates :email, :token, presence: true
+  validates_uniqueness_of :integration_token, allow_nil: true
+
 
   def self.find_by_omniauth(auth)
     user = User.find_by_email(auth["info"]["email"])

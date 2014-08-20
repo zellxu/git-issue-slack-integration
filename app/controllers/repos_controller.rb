@@ -7,7 +7,7 @@ class ReposController < ApplicationController
 
   def index
     if(session[:user_id])
-      @repos = current_user.repos.order(:short_name)
+      @repos = current_user.repos
       access_token = current_user.token
       uri = URI.parse("https://api.github.com/user/orgs?access_token=#{access_token}")
       http = Net::HTTP.new(uri.host, uri.port)
@@ -43,14 +43,12 @@ class ReposController < ApplicationController
 
   def create
     @repo = current_user.repos.new(params[:repo])
-    if @repo.save
-      current_user.update_attributes(default_repo_id: @repo.id) if current_user.repos.count <= 1
-      render js: "window.location = '#{repos_path}'"
-    else
-      respond_to do |format|
-        format.js
-        format.html
-      end
+    respond_to do |format|
+      @result = @repo.save
+      current_user.update_attributes(default_repo_id: @repo.id) if @result && current_user.repos.count <= 1
+      @flash_message = {notice: "Repo successfully created"}
+      format.js
+      format.html
     end
   end
 
@@ -62,26 +60,24 @@ class ReposController < ApplicationController
   end
 
   def update
-    if repo.update_attributes(params[:repo])
-      render js: "window.location = '#{repos_path}'"
-    else
-      respond_to do |format|
-        format.js
-        format.html
-      end
+    respond_to do |format|
+      @result = repo.update_attributes(params[:repo])
+      @flash_message = {notice: "Repo successfully updated"}
+      format.js
+      format.html
     end
   end
 
   def destroy
     repo.destroy
-    current_user.update_attributes(default_repo_id: current_user.repos.order(:short_name).first.try(:id)) if current_user.default_repo_id==repo.id
+    current_user.update_attributes(default_repo_id: current_user.repos.first.try(:id)) if current_user.default_repo_id==repo.id
     current_user.update_attributes(default_repo_id: nil) if current_user.repos.count == 0
-    redirect_to repos_path
+    redirect_to root_path
   end
 
   def make_default
     current_user.update_attributes(default_repo_id: params[:id])
-    redirect_to repos_path
+    redirect_to root_path
   end
 
   def repo

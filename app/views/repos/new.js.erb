@@ -1,2 +1,2 @@
-$("#repo-modal").html("<%= j render "new"%>");
-$('#repo-modal').modal('show');
+$("#repo-modal").html("<%= j render partial: 'modal', locals: {edit: false} %>")
+$('#repo-modal').modal('show')

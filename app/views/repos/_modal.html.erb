@@ -2,7 +2,7 @@
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      <h4 class="modal-title" id="new-repo-modal-label">Add a Repo</h4>
+      <h4 class="modal-title" id="repo-modal-label"><%= edit ? "Edit" : "Add" %> Repo</h4>
     </div>
     <%= form_for(repo, remote: true) do |f| %>
       <div class="modal-body">
@@ -28,7 +28,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <%= f.submit "Add", class: "btn btn-primary" %>
+        <%= f.submit edit ? "Save" : "Add", class: "btn btn-primary" %>
       </div>
     <% end %>
   </div>

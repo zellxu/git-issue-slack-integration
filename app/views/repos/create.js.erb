@@ -1,1 +1,10 @@
-$("#repo-modal").html("<%= j render "new"%>");
+<% if @result %>
+  $("#repo-modal").modal('hide')
+  $("#repos").append("<%= j render partial: 'row', locals: {r: repo} %>")
+  $("#repos-<%= repo.id %> .panel-heading").effect( "highlight", 3000)
+  $("#<%=j repo.owner %> .<%= repo.name %>").remove()
+  $("#flash-message").html("<%= j render partial: 'layouts/flash_message', locals: {flash: @flash_message} %>")
+  $('html, body').animate({ scrollTop: 0 }, 'fast')
+<% else %>
+	$("#repo-modal").html("<%= j render partial: 'modal', locals: {edit: false} %>")
+<% end %>

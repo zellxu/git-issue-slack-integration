@@ -1,0 +1,10 @@
+<div class="panel panel-default" id="repos-<%= r.id %>">
+  <div class="panel-heading">
+    <%= "#{r.short_name}: #{r.owner}/#{r.name} " %>
+    <div class="actions pull-right">
+      <%= link_to "Edit", edit_repo_path(r), remote: true, class: "btn-sm btn-primary" %>
+      <%= link_to 'destroy',  r,  method: :delete, data: { confirm: 'Are you sure?' }, class: "btn-sm btn-danger" %>
+      <%= link_to 'make default', make_default_repo_path(r), class: "btn-sm btn-primary" unless current_user.default_repo_id == r.id %>
+    </div>
+  </div>
+</div>
